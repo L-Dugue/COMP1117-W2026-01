@@ -20,17 +20,17 @@ public class PlayerController : MonoBehaviour
     {
         rBody = GetComponent<Rigidbody2D>();
         stats = new PlayerStats();
-        stats.MoveSpeed = 20;
+        stats.MoveSpeed = 10000;
     }
 
     void OnMove(InputValue value)
     {
+
        moveInput = value.Get<Vector2>(); 
     }
 
     void FixedUpdate()
     {
-        Debug.Log(stats.MoveSpeed);
         ApplyMovement();
     }
 

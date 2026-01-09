@@ -11,7 +11,7 @@ public class PlayerStats
         }
         set
         {
-            if(moveSpeed > 20)
+            if(value > 20)
             {
                 moveSpeed = 20;
             }
