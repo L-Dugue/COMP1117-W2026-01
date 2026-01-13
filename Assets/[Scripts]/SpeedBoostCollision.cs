@@ -8,7 +8,8 @@ public class SpeedBoostScript : MonoBehaviour
     {
         if (collider.CompareTag(tagCollection.PlayerTag))
         {
-            
+            collider.gameObject.GetComponent<PlayerController>().stats.isBoosting = true;
+            Destroy(gameObject.transform.parent.gameObject);
         }
     }
 }

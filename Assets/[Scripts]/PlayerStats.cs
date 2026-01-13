@@ -4,6 +4,11 @@ using UnityEngine;
 public class PlayerStats
 {
     private float moveSpeed;
+    private float boostMultiplier;
+    private float boostTime;
+
+    public bool isBoosting = false;
+
     public float MoveSpeed
     {
         get
@@ -23,6 +28,27 @@ public class PlayerStats
             
         }
     }
+
+    public float BoostMultiplier
+    {
+        get
+        {
+            return boostMultiplier;
+        }
+
+        set
+        {
+            if(value > 5)
+            {
+                boostMultiplier = 5;
+            }
+            else
+            {
+                boostMultiplier = value;
+            }
+        }
+    }
+
 
     
 }
