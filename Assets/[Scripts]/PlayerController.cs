@@ -13,13 +13,15 @@ public class PlayerController : MonoBehaviour
 
     // Private variables
     Vector2 moveInput;
-   
+    bool isBoostTimerCoroutineActive = false;
+    
 
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
         stats.MoveSpeed = 15;
-        stats.BoostMultiplier = 4;
+        stats.BoostMultiplier = 2;
+        stats.BoostTime = 3;
     }
 
     void OnMove(InputValue value)
@@ -48,11 +50,32 @@ public class PlayerController : MonoBehaviour
     }
     private void ApplyBoost()
     {
-        float targetVelocityX = moveInput.x * stats.MoveSpeed * stats.BoostMultiplier;
+        if (!isBoostTimerCoroutineActive)
+        {
+            StopAllCoroutines();
+            StartCoroutine(boostTimer());
+        }
+        
+        float targetVelocityX = moveInput.x * (stats.MoveSpeed * stats.BoostMultiplier); 
         rBody.linearVelocity = new Vector2(targetVelocityX, rBody.linearVelocity.y);
         Debug.Log(stats.MoveSpeed * stats.BoostMultiplier);
     }
 
-    
+    private IEnumerator boostTimer()
+    {
+        isBoostTimerCoroutineActive = true;
+        yield return new WaitForSeconds(stats.BoostTime);
+        stats.isBoosting = false;
+        isBoostTimerCoroutineActive = false;
 
+    }
+
+    // PUBLIC METHODS
+
+    // Allows for the enabling of the boost, without having to do it manually.
+    public bool EnableBoost()
+    {
+        stats.isBoosting = true;
+        return stats.isBoosting;
+    }
 }

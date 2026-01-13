@@ -5,6 +5,7 @@ public class PlayerStats
 {
     private float moveSpeed;
     private float boostMultiplier;
+    // 
     private float boostTime;
 
     public bool isBoosting = false;
@@ -49,6 +50,24 @@ public class PlayerStats
         }
     }
 
+    public float BoostTime
+    {
+        get
+        {
+            return boostTime;
+        }
 
+        set
+        {
+            if(value > 5)
+            {
+                boostTime = 5;
+            }
+            else
+            {
+                boostTime = value;
+            }
+        }
+    }
     
 }
