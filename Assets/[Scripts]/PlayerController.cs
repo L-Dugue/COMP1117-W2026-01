@@ -5,6 +5,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {       
+    // SerializedFields
+    [SerializeField] private float initialSpeed = 5.0f;
+    [SerializeField] private int initialHealth = 100;
+
+
     // Objects of classes
     public readonly PlayerStats stats = new PlayerStats();
 
@@ -19,9 +24,6 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
-        stats.MoveSpeed = 15;
-        stats.BoostMultiplier = 2;
-        stats.BoostTime = 3;
     }
 
     void OnMove(InputValue value)
