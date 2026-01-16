@@ -6,24 +6,29 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {       
     // SerializedFields
+    [Header("Initial Player Stats")]
     [SerializeField] private float initialSpeed = 5.0f;
     [SerializeField] private int initialHealth = 100;
+    [SerializeField] private int initialBoostMultiplier = 2;
+    [SerializeField] private int initialBoostTimer = 2;
+
 
 
     // Objects of classes
-    public readonly PlayerStats stats = new PlayerStats();
+    public PlayerStats stats;
 
     // Components
-    Rigidbody2D rBody;
+    private Rigidbody2D rBody;
 
     // Private variables
-    Vector2 moveInput;
-    bool isBoostTimerCoroutineActive = false;
+    private Vector2 moveInput;
+    private bool isBoostTimerCoroutineActive = false;
     
 
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
+        stats = new PlayerStats(initialSpeed, initialHealth, initialBoostMultiplier, initialBoostTimer);
     }
 
     void OnMove(InputValue value)
@@ -58,7 +63,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(boostTimer());
         }
         
-        float targetVelocityX = moveInput.x * (stats.MoveSpeed * stats.BoostMultiplier); 
+        float targetVelocityX = moveInput.x * stats.MoveSpeed * stats.BoostMultiplier; 
         rBody.linearVelocity = new Vector2(targetVelocityX, rBody.linearVelocity.y);
         Debug.Log(stats.MoveSpeed * stats.BoostMultiplier);
     }
@@ -79,5 +84,11 @@ public class PlayerController : MonoBehaviour
     {
         stats.isBoosting = true;
         return stats.isBoosting;
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        stats.CurrentHealth -= damageAmount;
+        Debug.Log("Player took damage");
     }
 }

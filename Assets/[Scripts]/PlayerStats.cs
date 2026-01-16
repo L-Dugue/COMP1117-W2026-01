@@ -108,12 +108,15 @@ public class PlayerStats
         currentHealth = 100;
     }
 
-    public PlayerStats(float moveSpeed, int maxHealth)
+    public PlayerStats(float moveSpeed, int maxHealth, float boostMultiplier, float boostTime)
     {
         this.moveSpeed = moveSpeed;
         this.maxHealth = maxHealth;
+        this.boostMultiplier = boostMultiplier;
+        this.boostTime = boostTime;
         currentHealth = maxHealth;
 
-        Debug.Log($"Player initalized with MoveSpeed = {moveSpeed}, MaxHealth = {maxHealth}, CurrentHealth = {currentHealth}")
+
+        Debug.Log($"Player initalized with MoveSpeed = {moveSpeed}, MaxHealth = {maxHealth}, CurrentHealth = {currentHealth}");
     }
 }
