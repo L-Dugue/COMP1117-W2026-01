@@ -1,12 +1,15 @@
+using System.Xml.Schema;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class PlayerStats
 {
+    // Private Backing Fields
     private float moveSpeed;
     private float boostMultiplier;
-    // 
     private float boostTime;
+    private float maxHealth;
+    private float currentHealth;
 
     public bool isBoosting = false;
 
@@ -21,6 +24,10 @@ public class PlayerStats
             if(value > 20)
             {
                 moveSpeed = 20;
+            }
+            else if(value < 0)
+            {
+                moveSpeed = 0;
             }
             else
             {
