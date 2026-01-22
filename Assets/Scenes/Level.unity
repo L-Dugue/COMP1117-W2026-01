@@ -753,6 +753,7 @@ MonoBehaviour:
   initialHealth: 100
   initialBoostMultiplier: 2
   initialBoostTimer: 2
+  healthBar: {fileID: 1456931132}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System.Collections;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {       
@@ -11,6 +12,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int initialHealth = 100;
     [SerializeField] private int initialBoostMultiplier = 2;
     [SerializeField] private int initialBoostTimer = 2;
+    [SerializeField] private Slider healthBar;
 
 
 
@@ -95,12 +97,21 @@ public class PlayerController : MonoBehaviour
         // If the player is dead, print to the console. Else, remove some health.
         if (stats.IsDead)
         {
+            if (healthBar.gameObject.activeSelf) // If the healthBar is active, set it to false.
+            {
+                healthBar.gameObject.SetActive(false);
+                return;
+            }
+            else // Else just return
+            {
+                return;
+            } 
            
-           return; 
         }
         else
         {
             stats.CurrentHealth -= damageAmount;
+            healthBar.value = stats.CurrentHealth;
         }
         
         
