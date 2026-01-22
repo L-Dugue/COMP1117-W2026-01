@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         ApplyMovement();
         if (stats.IsDead)
         {
-            
+            Debug.Log("Player has perished.");
         }
     }
 
@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
         // If the player is dead, print to the console. Else, remove some health.
         if (stats.IsDead)
         {
-           Debug.Log("Player has perished.");
+           
            return; 
         }
         else
