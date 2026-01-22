@@ -47,6 +47,32 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    
+    // PUBLIC METHODS
+
+    // Allows for the enabling of the boost, without having to do it manually.
+    public bool EnableBoost()
+    {
+        stats.isBoosting = true;
+        return stats.isBoosting;
+    }
+
+    public void TakeDamage(int damageAmount)
+    {
+        // If the player is dead, print to the console. Else, remove some health.
+        if (stats.IsDead)
+        {
+            return;
+        }
+        else
+        {
+            stats.CurrentHealth -= damageAmount;
+            AdjustHealthBar();
+        }
+        
+        
+    }
+
     private void ApplyMovement()
     {
         if (!stats.isBoosting)
@@ -83,37 +109,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    // PUBLIC METHODS
 
-    // Allows for the enabling of the boost, without having to do it manually.
-    public bool EnableBoost()
+    /// <summary>
+    /// Helper function to adjust the HealthBar slider to the currentHealth of the player.
+    /// </summary>
+    private void AdjustHealthBar()
     {
-        stats.isBoosting = true;
-        return stats.isBoosting;
-    }
-
-    public void TakeDamage(int damageAmount)
-    {
-        // If the player is dead, print to the console. Else, remove some health.
-        if (stats.IsDead)
+        if (!stats.IsDead) // Will update the Healthbar with the currentHealth
         {
-            if (healthBar.gameObject.activeSelf) // If the healthBar is active, set it to false.
-            {
-                healthBar.gameObject.SetActive(false);
-                return;
-            }
-            else // Else just return
-            {
-                return;
-            } 
-           
+            healthBar.value = stats.CurrentHealth;
         }
         else
         {
-            stats.CurrentHealth -= damageAmount;
-            healthBar.value = stats.CurrentHealth;
+            healthBar.gameObject.SetActive(false);
+            return;
         }
-        
-        
     }
+
 }
