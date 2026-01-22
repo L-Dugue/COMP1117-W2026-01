@@ -37,7 +37,23 @@ public class PlayerStats
             
         }
     }
-
+    /// <summary>
+    /// Will be set to TRUE if the player's currentHealth is less than or equal to 0. Else, returns FALSE.
+    /// </summary>
+    public bool IsDead
+    {
+        get
+        {
+            if(currentHealth <= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
     public float BoostMultiplier
     {
         get

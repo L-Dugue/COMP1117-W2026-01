@@ -39,6 +39,10 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         ApplyMovement();
+        if (stats.IsDead)
+        {
+            
+        }
     }
 
     private void ApplyMovement()
@@ -88,7 +92,17 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
-        stats.CurrentHealth -= damageAmount;
-        Debug.Log("Player took damage");
+        // If the player is dead, print to the console. Else, remove some health.
+        if (stats.IsDead)
+        {
+           Debug.Log("Player has perished.");
+           return; 
+        }
+        else
+        {
+            stats.CurrentHealth -= damageAmount;
+        }
+        
+        
     }
 }
