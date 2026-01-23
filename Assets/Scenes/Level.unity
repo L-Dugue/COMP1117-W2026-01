@@ -926,7 +926,7 @@ GameObject:
   - component: {fileID: 661483107}
   - component: {fileID: 661483106}
   - component: {fileID: 661483105}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Level
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4083,10 +4083,6 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6334437476774266215, guid: 999a74b37c04eec47afec4f30f5a8b3c, type: 3}
-      propertyPath: groundCheck
-      value: 
-      objectReference: {fileID: 8155639947541169877}
     - target: {fileID: 6514166340099641787, guid: 999a74b37c04eec47afec4f30f5a8b3c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.92
@@ -4132,11 +4128,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 999a74b37c04eec47afec4f30f5a8b3c, type: 3}
---- !u!4 &8155639947541169877 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6267207898987827896, guid: 999a74b37c04eec47afec4f30f5a8b3c, type: 3}
-  m_PrefabInstance: {fileID: 8155639947541169876}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

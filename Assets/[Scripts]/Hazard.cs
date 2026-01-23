@@ -11,7 +11,7 @@ public class Hazard : MonoBehaviour
         // Takes damage once the Player has entered the Trigger
         if (collision.CompareTag(tagCollection.PlayerTag))
         {
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage(hazardStats.DamageAmount);
+            collision.gameObject.GetComponent<Player>().TakeDamage(hazardStats.DamageAmount);
         }
     }
 }

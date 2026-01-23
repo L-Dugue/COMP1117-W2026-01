@@ -2,18 +2,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
 
+[RequireComponent(typeof(Rigidbody2D))]
+
 public class Character : MonoBehaviour
 {
     // Private Variables
     [Header("Character Stats Stats")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private Slider healthBar;
 
     // public PlayerStats stats;
-
     private int currentHealth;
-    private bool isDead = false;
+    [SerializeField] private bool isDead = false;
 
     // Public properties
     public float MoveSpeed
@@ -40,20 +40,34 @@ public class Character : MonoBehaviour
         // stats = new PlayerStats(moveSpeed, maxHealth, initialBoostMultiplier, initialBoostTimer);
     }
 
-    public void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
+        Debug.Log(currentHealth);
         // Level Of Protection
         if (IsDead)
         {
+            Die();
             return;
+        }
+        if(currentHealth <= 0)
+        {
+            Die();
         }
 
         // ACTUAL LOGIC
         CurrentHealth -= amount;
     }
 
-    protected void Die()
+    protected virtual void Die()
     {
+        if (isDead)
+        {
+           return; 
+        } 
+        else if(currentHealth <= 0)
+        {
+            isDead = true;
+        }
         
     }
 }

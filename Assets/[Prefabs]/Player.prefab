@@ -430,6 +430,7 @@ GameObject:
   - component: {fileID: 1087343407672290077}
   - component: {fileID: 6334437476774266215}
   - component: {fileID: 2061687132341599526}
+  - component: {fileID: 7194372601814987006}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -742,7 +743,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   moveSpeed: 5
   maxHealth: 100
-  healthBar: {fileID: 0}
   jumpForce: 15
   groundLayer:
     serializedVersion: 2
@@ -763,6 +763,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9c564e0e019c34439dab44c3b8a6981, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputHandler
+--- !u!114 &7194372601814987006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5804269861822975854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96c7bee3e423f44bb151ac3d40758eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBarHandler
+  healthBar: {fileID: 6641799616590119295}
 --- !u!1 &6517923539910022315
 GameObject:
   m_ObjectHideFlags: 0

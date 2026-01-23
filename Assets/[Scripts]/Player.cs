@@ -12,8 +12,13 @@ public class Player : Character
     [SerializeField] private int initialBoostMultiplier = 2;
     [SerializeField] private int initialBoostTimer = 2;
 
+
+
+
+
     // Private variables
     private Rigidbody2D rigidBody;
+    private HealthBarHandler healthBarHandler;
     private bool isGrounded;
     private InputHandler input;
 
@@ -22,6 +27,7 @@ public class Player : Character
         base.Awake();
         rigidBody = GetComponent<Rigidbody2D>();
         input = GetComponent<InputHandler>();
+        healthBarHandler = GetComponent<HealthBarHandler>();
     }
 
     void Update()
@@ -60,6 +66,20 @@ public class Player : Character
         // Add force
         rigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         
+    }
+
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+        healthBarHandler.AdjustHealthBar(IsDead, CurrentHealth);
+        
+        
+    }
+
+    protected override void Die()
+    {
+        healthBarHandler.AdjustHealthBarDeath();
+        base.Die();
     }
 
 }
