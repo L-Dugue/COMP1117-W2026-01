@@ -121,8 +121,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            healthBar.gameObject.SetActive(false);
-            return;
+            if (healthBar.gameObject.activeSelf)
+            {
+                healthBar.value = 0;
+                healthBar.gameObject.SetActive(false);
+            }
         }
     }
 
