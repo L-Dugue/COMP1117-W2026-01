@@ -1,18 +1,16 @@
 using System.Collections;
+using Unity.Mathematics;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Character
 {       
-    // SerializedFields
-    [Header("Initial Player Stats")]
-    [SerializeField] private float initialSpeed = 5.0f;
-    [SerializeField] private int initialHealth = 100;
-    [SerializeField] private int initialBoostMultiplier = 2;
-    [SerializeField] private int initialBoostTimer = 2;
-    [SerializeField] private Slider healthBar;
+
+    [Header("Animation Variables")]
+    [SerializeField] private Animator anim;
+    [SerializeField] private SpriteRenderer sprite;
 
 
 
@@ -30,12 +28,12 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         rBody = GetComponent<Rigidbody2D>();
-        stats = new PlayerStats(initialSpeed, initialHealth, initialBoostMultiplier, initialBoostTimer);
     }
 
     void OnMove(InputValue value)
     {
-       moveInput = value.Get<Vector2>(); 
+       moveInput = value.Get<Vector2>();
+       ApplyAnimation(); 
     }
 
     void FixedUpdate()
@@ -67,7 +65,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             stats.CurrentHealth -= damageAmount;
-            AdjustHealthBar();
+            // AdjustHealthBar();
         }
         
         
@@ -113,19 +111,32 @@ public class PlayerController : MonoBehaviour
     /// <summary>
     /// Helper function to adjust the HealthBar slider to the currentHealth of the player.
     /// </summary>
-    private void AdjustHealthBar()
+    // private void AdjustHealthBar()
+    // {
+    //     if (!stats.IsDead) // Will update the Healthbar with the currentHealth
+    //     {
+    //         healthBar.value = stats.CurrentHealth;
+    //     }
+    //     else
+    //     {
+    //         if (healthBar.gameObject.activeSelf)
+    //         {
+    //             healthBar.value = 0;
+    //             healthBar.gameObject.SetActive(false);
+    //         }
+    //     }
+    // }
+
+    private void ApplyAnimation()
     {
-        if (!stats.IsDead) // Will update the Healthbar with the currentHealth
+        anim.SetFloat("XVelocity", math.abs(moveInput.x));
+        if(moveInput.x < 0)
         {
-            healthBar.value = stats.CurrentHealth;
+            sprite.flipX = true;
         }
-        else
+        else if(sprite.flipX)
         {
-            if (healthBar.gameObject.activeSelf)
-            {
-                healthBar.value = 0;
-                healthBar.gameObject.SetActive(false);
-            }
+            sprite.flipX = false;
         }
     }
 
