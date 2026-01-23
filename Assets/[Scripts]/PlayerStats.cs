@@ -1,4 +1,5 @@
 using System.Xml.Schema;
+using Unity.Mathematics;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
@@ -22,19 +23,7 @@ public class PlayerStats
         }
         set
         {
-            if(value > 20)
-            {
-                moveSpeed = 20;
-            }
-            else if(value < 0)
-            {
-                moveSpeed = 0;
-            }
-            else
-            {
-               moveSpeed = value; 
-            }
-            
+            moveSpeed = math.clamp(value, 0, 20);
         }
     }
     /// <summary>
