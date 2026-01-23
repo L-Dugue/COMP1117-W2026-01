@@ -8,9 +8,7 @@ using UnityEngine.UI;
 public class PlayerController : Character
 {       
 
-    [Header("Animation Variables")]
-    [SerializeField] private Animator anim;
-    [SerializeField] private SpriteRenderer sprite;
+    
 
 
 
@@ -33,7 +31,7 @@ public class PlayerController : Character
     void OnMove(InputValue value)
     {
        moveInput = value.Get<Vector2>();
-       ApplyAnimation(); 
+    //    ApplyAnimation(); 
     }
 
     void FixedUpdate()
@@ -127,17 +125,6 @@ public class PlayerController : Character
     //     }
     // }
 
-    private void ApplyAnimation()
-    {
-        anim.SetFloat("XVelocity", math.abs(moveInput.x));
-        if(moveInput.x < 0)
-        {
-            sprite.flipX = true;
-        }
-        else if(sprite.flipX)
-        {
-            sprite.flipX = false;
-        }
-    }
+   
 
 }

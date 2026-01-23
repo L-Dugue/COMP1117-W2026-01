@@ -2,6 +2,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
 
+[RequireComponent(typeof(HealthBarHandler))]
+[RequireComponent(typeof(InputHandler))]
+[RequireComponent(typeof(AnimationHandler))]
+
 public class Player : Character
 {
     [Header("Player Stats")]
@@ -12,15 +16,15 @@ public class Player : Character
     [SerializeField] private int initialBoostMultiplier = 2;
     [SerializeField] private int initialBoostTimer = 2;
 
-
-
+    
 
 
     // Private variables
     private Rigidbody2D rigidBody;
     private HealthBarHandler healthBarHandler;
-    private bool isGrounded;
     private InputHandler input;
+    private AnimationHandler animHandler;
+    private bool isGrounded;
 
     protected override void Awake()
     {   
@@ -28,6 +32,7 @@ public class Player : Character
         rigidBody = GetComponent<Rigidbody2D>();
         input = GetComponent<InputHandler>();
         healthBarHandler = GetComponent<HealthBarHandler>();
+        animHandler = GetComponent<AnimationHandler>();
     }
 
     void Update()
@@ -48,6 +53,7 @@ public class Player : Character
     {
         float horizontalVelocity = input.MoveInput.x * MoveSpeed;
         rigidBody.linearVelocity = new Vector2(horizontalVelocity, rigidBody.linearVelocity.y);
+        animHandler.ApplyWalkAnimation(input.MoveInput.x);
     }
     private void HandleJump()
     {

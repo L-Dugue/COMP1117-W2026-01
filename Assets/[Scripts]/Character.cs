@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private int maxHealth = 100;
 
+
     // public PlayerStats stats;
     private int currentHealth;
     [SerializeField] private bool isDead = false;
