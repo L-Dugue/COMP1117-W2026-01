@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,8 +15,10 @@ public class Player : Character
     [SerializeField] private LayerMask groundLayer; // Checks to see if I am standing on the ground Layer
     [SerializeField] private Transform groundCheck; // Position of my ground check
     [SerializeField] private float groundCheckRadius = 0.2f; // Size of my ground check radius circle
-    [SerializeField] private int initialBoostMultiplier = 2;
-    [SerializeField] private int initialBoostTimer = 2;
+
+    [Header("Boost Properties")]
+    [SerializeField] private float boostMultiplier;
+    [SerializeField] private float boostTime;
 
     
 
@@ -26,6 +29,15 @@ public class Player : Character
     private AnimationHandler animHandler;
     private bool isGrounded;
     private float horizontalVelocity;
+    private bool isBoostTimerCoroutineActive = false;
+    private bool isBoosting = false;
+
+    // Public Variables
+    public bool IsBoosting
+    {
+        get{return isBoosting; }
+        private set{isBoosting = value; }
+    }
 
     protected override void Awake()
     {   
@@ -66,8 +78,16 @@ public class Player : Character
 
     private void HandleMovement()
     {
-        horizontalVelocity = input.MoveInput.x * MoveSpeed;
-        rigidBody.linearVelocity = new Vector2(horizontalVelocity, rigidBody.linearVelocity.y);
+        if (!IsBoosting)
+        {
+            horizontalVelocity = input.MoveInput.x * MoveSpeed;
+            rigidBody.linearVelocity = new Vector2(horizontalVelocity, rigidBody.linearVelocity.y);
+        }
+        else
+        {
+            ApplyBoost();
+        }
+        
     }
     private void HandleJump()
     {
@@ -102,6 +122,33 @@ public class Player : Character
     {
         healthBarHandler.AdjustHealthBarDeath();
         base.Die();
+    }
+
+    public void EnableBoost()
+    {
+        IsBoosting = true;
+    }
+
+    private void ApplyBoost()
+    {
+        if (!isBoostTimerCoroutineActive)
+        {
+            StopAllCoroutines();
+            StartCoroutine(boostTimer());
+        }
+        
+        horizontalVelocity = input.MoveInput.x * MoveSpeed;
+        rigidBody.linearVelocity = new Vector2(horizontalVelocity * boostMultiplier, rigidBody.linearVelocity.y);
+        Debug.Log(MoveSpeed * boostMultiplier);
+    }
+
+    private IEnumerator boostTimer()
+    {
+        isBoostTimerCoroutineActive = true;
+        yield return new WaitForSeconds(boostTime);
+        IsBoosting = false;
+        isBoostTimerCoroutineActive = false;
+
     }
 
 }

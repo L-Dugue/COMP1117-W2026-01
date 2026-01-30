@@ -751,8 +751,8 @@ MonoBehaviour:
     m_Bits: 64
   groundCheck: {fileID: 6267207898987827896}
   groundCheckRadius: 0.2
-  initialBoostMultiplier: 2
-  initialBoostTimer: 2
+  boostMultiplier: 2.5
+  boostTime: 2
 --- !u!114 &2061687132341599526
 MonoBehaviour:
   m_ObjectHideFlags: 0

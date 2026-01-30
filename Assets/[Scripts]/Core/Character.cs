@@ -14,6 +14,7 @@ public class Character : MonoBehaviour
     [SerializeField] private int maxHealth = 100;
     [SerializeField] private bool isDead = false;
     private int currentHealth;
+     
     protected Rigidbody2D rigidBody;
     protected Animator anim;
 
@@ -35,6 +36,46 @@ public class Character : MonoBehaviour
         get{ return isDead; }
     }
 
+    // public float BoostMultiplier
+    // {
+    //     get
+    //     {
+    //         return boostMultiplier;
+    //     }
+
+    //     set
+    //     {
+    //         if(value > 5)
+    //         {
+    //             boostMultiplier = 5;
+    //         }
+    //         else
+    //         {
+    //             boostMultiplier = value;
+    //         }
+    //     }
+    // }
+
+    // protected float BoostTime
+    // {
+    //     get
+    //     {
+    //         return boostTime;
+    //     }
+
+    //     set
+    //     {
+    //         if(value > 5)
+    //         {
+    //             boostTime = 5;
+    //         }
+    //         else
+    //         {
+    //             boostTime = value;
+    //         }
+    //     }
+    // }
+
 
     protected virtual void Awake()
     {
@@ -42,7 +83,7 @@ public class Character : MonoBehaviour
         anim = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
 
-        // stats = new PlayerStats(moveSpeed, maxHealth, initialBoostMultiplier, initialBoostTimer);
+        //stats = new PlayerStats(moveSpeed, maxHealth, initialBoostMultiplier, initialBoostTimer);
     }
 
     public virtual void TakeDamage(int amount)

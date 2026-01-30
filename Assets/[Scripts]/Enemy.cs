@@ -17,11 +17,13 @@ public class Enemy : Character
 
     private void Update()
     {
+        // Calculate the boundaries of my movement
         float leftBoundary = startPos.x - patrolDistance;
         float rightBoundary = startPos.x + patrolDistance;
 
         transform.Translate(Vector2.right * direction * MoveSpeed * Time.deltaTime);
 
+        // Flip this object when it hits a boundary
         if(transform.position.x >= rightBoundary)
         {
             direction = -1; // Go left
@@ -29,8 +31,8 @@ public class Enemy : Character
         }
         else if(transform.position.x <= leftBoundary)
         {
-            direction = 1;
-            //transform.localScale = new Vector3()
+            direction = 1; // Go right
+            transform.localScale = new Vector3(-1, 1, 1);
         }
     }
 }
