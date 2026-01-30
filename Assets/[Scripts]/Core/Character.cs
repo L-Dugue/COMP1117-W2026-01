@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 
 public class Character : MonoBehaviour
 {
@@ -15,7 +16,6 @@ public class Character : MonoBehaviour
     private int currentHealth;
     protected Rigidbody2D rigidBody;
     protected Animator anim;
-    protected SpriteRenderer sprite;
 
     // Public properties
     public float MoveSpeed
@@ -40,7 +40,6 @@ public class Character : MonoBehaviour
     {
         currentHealth = maxHealth;
         anim = GetComponent<Animator>();
-        sprite = GetComponent<SpriteRenderer>();
         rigidBody = GetComponent<Rigidbody2D>();
 
         // stats = new PlayerStats(moveSpeed, maxHealth, initialBoostMultiplier, initialBoostTimer);
