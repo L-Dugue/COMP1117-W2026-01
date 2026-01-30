@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements.Experimental;
@@ -10,11 +11,11 @@ public class Character : MonoBehaviour
     [Header("Character Stats Stats")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private int maxHealth = 100;
-
-
-    // public PlayerStats stats;
-    private int currentHealth;
     [SerializeField] private bool isDead = false;
+    private int currentHealth;
+    protected Rigidbody2D rigidBody;
+    protected Animator anim;
+    protected SpriteRenderer sprite;
 
     // Public properties
     public float MoveSpeed
@@ -38,6 +39,10 @@ public class Character : MonoBehaviour
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
+        anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
+        rigidBody = GetComponent<Rigidbody2D>();
+
         // stats = new PlayerStats(moveSpeed, maxHealth, initialBoostMultiplier, initialBoostTimer);
     }
 
@@ -71,4 +76,8 @@ public class Character : MonoBehaviour
         }
         
     }
+
+    
+
+    
 }

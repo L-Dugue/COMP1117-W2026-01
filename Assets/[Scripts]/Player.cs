@@ -1,3 +1,4 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.XR;
@@ -20,25 +21,34 @@ public class Player : Character
 
 
     // Private variables
-    private Rigidbody2D rigidBody;
     private HealthBarHandler healthBarHandler;
     private InputHandler input;
     private AnimationHandler animHandler;
     private bool isGrounded;
+    private float horizontalVelocity;
 
     protected override void Awake()
     {   
         base.Awake();
-        rigidBody = GetComponent<Rigidbody2D>();
         input = GetComponent<InputHandler>();
         healthBarHandler = GetComponent<HealthBarHandler>();
-        animHandler = GetComponent<AnimationHandler>();
+        //animHandler = GetComponent<AnimationHandler>();
     }
 
     void Update()
     {
         // Perform my ground check
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
+        anim.SetBool("isGrounded", isGrounded);
+        anim.SetFloat("YVelocity", rigidBody.linearVelocity.y);
+        anim.SetFloat("XVelocity", math.abs(rigidBody.linearVelocity.x));
+
+        if(input.MoveInput.x != 0)
+        {
+            transform.localScale = new Vector3(Mathf.Sign(input.MoveInput.x), 1, 1);
+        }
+        
     }
 
     void FixedUpdate()
@@ -47,13 +57,13 @@ public class Player : Character
         HandleMovement();
         // Handle Jumping
         HandleJump();
+
     }
 
     private void HandleMovement()
     {
-        float horizontalVelocity = input.MoveInput.x * MoveSpeed;
+        horizontalVelocity = input.MoveInput.x * MoveSpeed;
         rigidBody.linearVelocity = new Vector2(horizontalVelocity, rigidBody.linearVelocity.y);
-        animHandler.ApplyWalkAnimation(input.MoveInput.x);
     }
     private void HandleJump()
     {
@@ -71,6 +81,8 @@ public class Player : Character
 
         // Add force
         rigidBody.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+
+        //ApplyJumpAnimation(horizontalVelocity);
         
     }
 
