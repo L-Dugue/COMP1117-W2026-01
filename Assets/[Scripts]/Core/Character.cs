@@ -23,6 +23,7 @@ public class Character : MonoBehaviour
     {
         // Read-Only
         get { return moveSpeed; }
+        set { moveSpeed = math.clamp(value, 0, 100);}
     }
     
     protected int CurrentHealth
