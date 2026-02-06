@@ -6,13 +6,13 @@ using UnityEngine.UIElements.Experimental;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 
-public class Character : MonoBehaviour
+public abstract class Character : MonoBehaviour
 {
     // Private Variables
     [Header("Character Stats Stats")]
     [SerializeField] private float moveSpeed = 5.0f;
     [SerializeField] private int maxHealth = 100;
-    [SerializeField] private bool isDead = false;
+    protected bool isDead = false;
     private int currentHealth;
      
     protected Rigidbody2D rigidBody;
@@ -92,7 +92,6 @@ public class Character : MonoBehaviour
         // Level Of Protection
         if (IsDead)
         {
-            Die();
             return;
         }
         if(currentHealth <= 0)
@@ -104,20 +103,5 @@ public class Character : MonoBehaviour
         CurrentHealth -= amount;
     }
 
-    protected virtual void Die()
-    {
-        if (isDead)
-        {
-           return; 
-        } 
-        else if(currentHealth <= 0)
-        {
-            isDead = true;
-        }
-        
-    }
-
-    
-
-    
+    public abstract void Die();
 }

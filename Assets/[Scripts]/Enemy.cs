@@ -10,14 +10,20 @@ public class Enemy : Character
 
     protected override void Awake()
     {
-        base.Awake();
 
+        base.Awake();
         startPos = transform.position;
+
     }
 
     private void Update()
     {
-        // Calculate the boundaries of my movement
+       MoveEnemy();
+    }
+
+    protected void MoveEnemy()
+    {
+         // Calculate the boundaries of my movement
         float leftBoundary = startPos.x - patrolDistance;
         float rightBoundary = startPos.x + patrolDistance;
 
@@ -27,12 +33,24 @@ public class Enemy : Character
         if(transform.position.x >= rightBoundary)
         {
             direction = -1; // Go left
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         }
         else if(transform.position.x <= leftBoundary)
         {
             direction = 1; // Go right
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
         }
+    }
+
+
+    public override void Die()
+    {
+        Debug.Log("Enemy is dead");
+
+        // Enemy death logic!
+        // _________________
+        // Award points / loot to the player
+        // enemy death animation
+        
     }
 }

@@ -28,9 +28,9 @@ public class Player : Character
     private InputHandler input;
     private AnimationHandler animHandler;
     private bool isGrounded;
-    private float horizontalVelocity;
     private bool isBoostTimerCoroutineActive = false;
     private bool isBoosting = false;
+    private float currentSpeedModifier = 1f;
 
     // Public Variables
     public bool IsBoosting
@@ -60,7 +60,7 @@ public class Player : Character
         anim.SetFloat("YVelocity", rigidBody.linearVelocity.y);
 
         // Flips the character if they are moving Right or Left
-        if(input.MoveInput.x != 0)
+        if(input.MoveInput.x != 0 && !IsDead)
         {
             transform.localScale = new Vector3(Mathf.Sign(input.MoveInput.x), 1, 1);
         }
@@ -69,6 +69,11 @@ public class Player : Character
 
     void FixedUpdate()
     {
+        if (IsDead)
+        {
+            return;
+        }
+
         // Handle Movewment
         HandleMovement();
         // Handle Jumping
@@ -80,8 +85,10 @@ public class Player : Character
     {
         if (!IsBoosting)
         {
-            horizontalVelocity = input.MoveInput.x * MoveSpeed;
+            float horizontalVelocity = input.MoveInput.x * MoveSpeed * currentSpeedModifier;
             rigidBody.linearVelocity = new Vector2(horizontalVelocity, rigidBody.linearVelocity.y);
+
+            currentSpeedModifier = 1f;
         }
         else
         {
@@ -118,10 +125,11 @@ public class Player : Character
         
     }
 
-    protected override void Die()
+    public override void Die()
     {
         healthBarHandler.AdjustHealthBarDeath();
-        base.Die();
+        isDead = true;
+        rigidBody.linearVelocity = Vector2.zero;
     }
 
     public void EnableBoost()
@@ -137,7 +145,7 @@ public class Player : Character
             StartCoroutine(boostTimer());
         }
         
-        horizontalVelocity = input.MoveInput.x * MoveSpeed;
+        float horizontalVelocity = input.MoveInput.x * MoveSpeed;
         rigidBody.linearVelocity = new Vector2(horizontalVelocity * boostMultiplier, rigidBody.linearVelocity.y);
         Debug.Log(MoveSpeed * boostMultiplier);
     }
@@ -149,6 +157,11 @@ public class Player : Character
         IsBoosting = false;
         isBoostTimerCoroutineActive = false;
 
+    }
+
+    public void ApplySpeedModifier(float speedModifier)
+    {
+        currentSpeedModifier = speedModifier;
     }
 
 }
