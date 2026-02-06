@@ -49,4 +49,9 @@ public class Enemy : Character
             transform.localScale = new Vector3(-1, 1, 1) * enemySizeMultiplier;
         }
     }
+
+    public override void Die()
+    {
+        Debug.Log("Player dies!");
+    }
 }
