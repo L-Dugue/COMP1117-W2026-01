@@ -79,6 +79,8 @@ public class Player : Character
         // Handle Jumping
         HandleJump();
 
+
+        // Puts the player's localScale.y to 1 if it isn't... For the Anti-Gravity 
         if(transform.localScale.y != 1)
         {
             transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
