@@ -62,7 +62,7 @@ public class Player : Character
         // Flips the character if they are moving Right or Left
         if(input.MoveInput.x != 0 && !IsDead)
         {
-            transform.localScale = new Vector3(Mathf.Sign(input.MoveInput.x), 1, 1);
+            transform.localScale = new Vector3(Mathf.Sign(input.MoveInput.x), transform.localScale.y, 1);
         }
         
     }
@@ -79,6 +79,11 @@ public class Player : Character
         // Handle Jumping
         HandleJump();
 
+        if(transform.localScale.y != 1)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, 1, transform.localScale.z);
+        }
+        
     }
 
     private void HandleMovement()
@@ -162,6 +167,11 @@ public class Player : Character
     public void ApplySpeedModifier(float speedModifier)
     {
         currentSpeedModifier = speedModifier;
+    }
+
+    public void FlipPlayerVertically()
+    {
+        gameObject.transform.localScale = new Vector3( gameObject.transform.localScale.x,  -1,  gameObject.transform.localScale.z);
     }
 
 }
