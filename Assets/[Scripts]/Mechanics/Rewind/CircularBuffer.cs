@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-public class CircularBuffer
+public class CircularBuffer<T>
 {
     // Collection itself
-    private List<int> buffer;
+    private List<T> buffer;
 
     // Capacity
     private int _capacity;
@@ -12,7 +12,7 @@ public class CircularBuffer
     // Constructor - Allows to create a CircularBuffer with a given capacity
     public CircularBuffer(int capacity)
     {
-        buffer = new List<int>(capacity);
+        buffer = new List<T>(capacity);
         _capacity = capacity;
     }
     
@@ -22,7 +22,7 @@ public class CircularBuffer
 
     // Buffer operations
 
-    public void Push(int item)
+    public void Push(T item)
     {
         // Check if my buffer is at or above capacity
         if(buffer.Count >= _capacity)
@@ -33,12 +33,12 @@ public class CircularBuffer
         buffer.Add(item); // Adds the most recent to the beginning
     }
 
-    public int Pop()
+    public T Pop()
     {
-        if(buffer.Count == 0) return -1; // -1 will act as a special value to check against
+        if(buffer.Count == 0) return default(T); // -1 will act as a special value to check against
 
         int lastIndex = buffer.Count - 1;
-        int item = buffer[lastIndex]; // Grabs a copy.
+        T item = buffer[lastIndex]; // Grabs a copy.
         buffer.RemoveAt(lastIndex);
 
         return item;

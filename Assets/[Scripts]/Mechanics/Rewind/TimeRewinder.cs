@@ -8,11 +8,15 @@ public class TimeRewinder : MonoBehaviour
     public bool isRewinding = false; // Optional visual reference to know that we are rewinding.
 
 
-    private CircularBuffer intBuffer;
+    private CircularBuffer<Vector3> positionHistory;
+    private CircularBuffer<Quaternion> rotationHistory;
+    private CircularBuffer<Vector3> scaleHistory;
 
     private void Awake()
     {
-        intBuffer = new CircularBuffer(maxFrames);
+        positionHistory = new CircularBuffer<Vector3>(maxFrames);
+        rotationHistory = new CircularBuffer<Quaternion>(maxFrames);
+        scaleHistory = new CircularBuffer<Vector3>(maxFrames);
     }
 
     public void OnRewind(InputAction.CallbackContext context)
@@ -29,7 +33,7 @@ public class TimeRewinder : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (!isRewinding)
         {
@@ -45,15 +49,27 @@ public class TimeRewinder : MonoBehaviour
     // Record - Happens every frame
     private void Record()
     {
-        int temp = Random.Range(0, 1000);
-        intBuffer.Push(temp);
-        Debug.Log($"Value pushed = {temp}");
+        positionHistory.Push(transform.position);
+        rotationHistory.Push(transform.rotation);
+        scaleHistory.Push(transform.localScale);
+
+        
     }
 
     // Rewind - Rewinds on a push of a button
     private void Rewind()
     {
-        int value = intBuffer.Pop();
-        Debug.Log($"Value popped = {value}");
+       if(positionHistory.Count > 0)
+        {
+            transform.position = positionHistory.Pop();
+            transform.rotation = rotationHistory.Pop();
+
+            Vector3 tempLocalScale = scaleHistory.Pop();
+            transform.localScale = new Vector3(tempLocalScale.x * -1, tempLocalScale.y, tempLocalScale.z);
+        }
+        else
+        {
+            isRewinding = false;
+        }
     }
 }
